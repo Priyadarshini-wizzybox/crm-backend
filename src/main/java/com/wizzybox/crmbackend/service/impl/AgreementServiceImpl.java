@@ -30,7 +30,7 @@ public class AgreementServiceImpl implements AgreementService {
     public Agreement saveAgreement(Agreement agreement, MultipartFile file) throws IOException {
         // Save the uploaded file and set the file path in the Agreement entity
         String fileName = saveFile(file);
-        agreement.setFileUpload("/uploads/" + fileName); // Store the relative file path
+        agreement.setMsaFile("/uploads/" + fileName); // Store the relative file path
 
         return agreementRepository.save(agreement);
     }

@@ -10,8 +10,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface AgreementService {
-    Agreement saveAgreement(Agreement agreement, MultipartFile file) throws IOException;
 
+	Agreement saveAgreement(Agreement agreement, MultipartFile file) throws IOException;
+	
     List<Agreement> getAllAgreements();
 
     Agreement getAgreementById(Long id);

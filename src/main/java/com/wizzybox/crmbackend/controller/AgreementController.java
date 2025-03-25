@@ -7,8 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.wizzybox.crmbackend.model.Agreement;
+
+
 import com.wizzybox.crmbackend.service.AgreementService;
 
 import java.io.IOException;
@@ -24,22 +25,22 @@ public class AgreementController {
     @Autowired
     private AgreementService agreementService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadAgreement(@RequestParam("fileUpload") MultipartFile file,
+    @PostMapping("/msa")
+    public ResponseEntity<String> uploadAgreement(@RequestParam("msaFile") MultipartFile file,
                                                   @RequestParam String clientName,
                                                   @RequestParam String employeeName,
                                                   @RequestParam String employeeId,
-                                                  @RequestParam String startDate,
-                                                  @RequestParam String endDate) {
+                                    @RequestParam String startDate,
+                                                  @RequestParam String endDate)
+                                               { 
         try {
             Agreement agreement = new Agreement();
             agreement.setClientName(clientName);
             agreement.setEmployeeName(employeeName);
             agreement.setEmployeeId(employeeId);
-           
             agreement.setStartDate(LocalDate.parse(startDate));
             agreement.setEndDate(LocalDate.parse(endDate));
-
+            
             // Save the agreement and uploaded file
             agreementService.saveAgreement(agreement, file);
 
@@ -49,11 +50,13 @@ public class AgreementController {
 
         } catch (IOException e) {
             logger.error("File upload failed due to an IOException", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("File upload failed: " + e.getMessage());
 
         } catch (Exception e) {
             logger.error("Unexpected error occurred", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Unexpected error: " + e.getMessage());
         }
     }
 
